@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#f8fafc">
+    <title>History - Vedic Age (Lecture 3)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        :root {
+            --bg-main: #f8fafc; --bg-card: #ffffff; --primary: #2563eb; --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff; --text-dark: #0f172a; --text-muted: #64748b; --border-color: #e2e8f0;
+            --green: #10b981; --green-light: #ecfdf5; --red: #ef4444; --red-light: #fef2f2;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06); --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08);
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-main); color: var(--text-dark); min-height: 100dvh; font-size: 15px; line-height: 1.5; overflow-x: hidden; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+        .hidden { display: none !important; }
+        .start-screen { position: fixed; inset: 0; background: var(--bg-main); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
+        .start-card { width: 100%; max-width: 440px; background: var(--bg-card); border-radius: 24px; padding: 36px 28px; box-shadow: var(--shadow-lg); text-align: center; border: 1px solid var(--border-color); }
+        .brand-icon { width: 60px; height: 60px; background: var(--primary-light); color: var(--primary); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 16px; }
+        .start-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+        .start-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+        .mode-btn { display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px; background: #fff; border: 1.5px solid var(--border-color); border-radius: 16px; text-align: left; margin-bottom: 12px; transition: all 0.2s ease; }
+        .mode-btn:hover { border-color: var(--primary); background: var(--primary-light); transform: translateY(-2px); }
+        .mode-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .mode-icon.quiz { background: #dbeafe; color: #2563eb; }
+        .mode-icon.test { background: #d1fae5; color: #059669; }
+        .mode-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+        .mode-info-txt { font-size: 12px; color: var(--text-muted); }
+        .quiz-app { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+        .quiz-header { flex-shrink: 0; background: #fff; border-bottom: 1px solid var(--border-color); padding: 12px 18px; }
+        .quiz-header-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .hdr-brand { font-weight: 700; font-size: 15px; }
+        .hdr-timer { padding: 6px 14px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 20px; font-family: monospace; font-weight: 700; color: var(--primary); }
+        .hdr-btn { width: 38px; height: 38px; border-radius: 10px; background: #fff; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; }
+        .quiz-main { flex: 1; overflow-y: auto; max-width: 900px; width: 100%; margin: 0 auto; padding: 24px 16px; }
+        .q-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-sm); }
+        .q-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        .q-num-badge { padding: 5px 12px; background: var(--primary-light); color: var(--primary); border-radius: 20px; font-size: 12px; font-weight: 700; }
+        .lang-btn { padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border-color); font-size: 12px; font-weight: 600; background: #fff; display: inline-flex; align-items: center; gap: 6px; }
+        .q-text { font-size: 16px; font-weight: 600; line-height: 1.6; margin-bottom: 22px; white-space: pre-line; }
+        .opts { display: flex; flex-direction: column; gap: 11px; }
+        .opt { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: #fff; border: 1.5px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.15s ease; }
+        .opt:hover:not(.locked) { border-color: var(--primary); background: #f8fafc; }
+        .opt.selected { border-color: var(--primary); background: var(--primary-light); }
+        .opt.correct { border-color: var(--green); background: var(--green-light); }
+        .opt.wrong { border-color: var(--red); background: var(--red-light); }
+        .opt.locked { cursor: default; }
+        .opt-letter { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: var(--text-muted); flex-shrink: 0; }
+        .opt.selected .opt-letter { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .opt.correct .opt-letter { background: var(--green); color: #fff; border-color: var(--green); }
+        .opt.wrong .opt-letter { background: var(--red); color: #fff; border-color: var(--red); }
+        .opt-text { flex: 1; font-weight: 600; }
+        .opt-tag { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+        .opt.correct .opt-tag { background: var(--green); color: #fff; }
+        .opt.wrong .opt-tag { background: var(--red); color: #fff; }
+        .sol-box { margin-top: 20px; padding: 16px; background: #f8fafc; border-left: 4px solid var(--primary); border-radius: 12px; }
+        .sol-head { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+        .quiz-nav { flex-shrink: 0; background: #fff; border-top: 1px solid var(--border-color); padding: 12px 18px; }
+        .quiz-nav-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .nav-btn { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; }
+        .nav-btn.prev { background: #fff; border: 1px solid var(--border-color); }
+        .nav-btn.prev:disabled { opacity: 0.4; cursor: not-allowed; }
+        .nav-btn.submit { background: var(--green-light); color: #065f46; border: 1px solid #a7f3d0; }
+        .nav-btn.next { background: var(--primary); color: #fff; }
+        .palette-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; display: none; }
+        .palette-overlay.open { display: block; }
+        .palette-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: min(340px, 85vw); background: #fff; z-index: 160; display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.25s; }
+        .palette-drawer.open { transform: translateX(0); }
+        .pal-head { padding: 18px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; font-weight: 700; }
+        .pal-grid { flex: 1; overflow-y: auto; padding: 16px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-content: start; }
+        .pal-btn { aspect-ratio: 1; border-radius: 10px; border: 1px solid var(--border-color); background: #f8fafc; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+        .pal-btn.answered { background: var(--green); color: #fff; border-color: var(--green); }
+        .pal-btn.current { outline: 2px solid var(--primary); outline-offset: 2px; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 170; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.open { display: flex; }
+        .modal-box { width: 100%; max-width: 420px; background: #fff; border-radius: 20px; padding: 28px; text-align: center; }
+        .modal-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 22px; }
+        .modal-stat { background: #f8fafc; border-radius: 12px; padding: 14px; border: 1px solid var(--border-color); }
+        .modal-stat-num { font-size: 24px; font-weight: 800; }
+        .modal-btn { width: 100%; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+        .modal-btn.confirm { background: var(--primary); color: #fff; }
+        .modal-btn.cancel { background: #f1f5f9; }
+        .results-screen { position: fixed; inset: 0; background: var(--bg-main); z-index: 180; display: none; overflow-y: auto; padding: 30px 16px 60px; }
+        .results-screen.open { display: block; }
+        .results-box { max-width: 600px; margin: 0 auto; text-align: center; }
+        .res-score-card { background: #0f172a; color: #fff; border-radius: 20px; padding: 28px; margin: 20px 0; }
+        .res-score-val { font-size: 54px; font-weight: 800; }
+        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .res-item { background: #fff; border-radius: 14px; padding: 16px; border: 1px solid var(--border-color); }
+        .res-item-val { font-size: 22px; font-weight: 700; }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 30px; font-size: 13px; font-weight: 600; z-index: 300; opacity: 0; transition: all 0.25s; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+    <div class="start-screen" id="startScreen">
+        <div class="start-card">
+            <div class="brand-icon"><i class="fas fa-om"></i></div>
+            <h1 class="start-title">History - Vedic Age</h1>
+            <p class="start-desc">Early & Later Vedic Period (Lecture 3)</p>
+            <button class="mode-btn" onclick="startApp('quiz')">
+                <div class="mode-icon quiz"><i class="fas fa-bolt"></i></div>
+                <div><div class="mode-name">Practice Mode</div><div class="mode-info-txt">Har question ke sath instant solution aur explanation dekhein.</div></div>
+            </button>
+            <button class="mode-btn" onclick="startApp('test')">
+                <div class="mode-icon test"><i class="fas fa-clock"></i></div>
+                <div><div class="mode-name">Exam Mode</div><div class="mode-info-txt">Timer ke sath exam attempt karein aur detailed scorecard payein.</div></div>
+            </button>
+        </div>
+    </div>
+
+    <div class="quiz-app hidden" id="quizApp">
+        <header class="quiz-header">
+            <div class="quiz-header-inner">
+                <button class="hdr-btn" onclick="openPalette()"><i class="fas fa-th-large"></i></button>
+                <div class="hdr-brand">Vedic Age - Lecture 3</div>
+                <div class="hdr-timer"><i class="fas fa-stopwatch"></i> <span id="timerText">00:00</span></div>
+            </div>
+        </header>
+
+        <main class="quiz-main" id="quizMain"></main>
+
+        <nav class="quiz-nav" id="quizNav">
+            <div class="quiz-nav-inner">
+                <button class="nav-btn prev" id="prevBtn" onclick="prevQuestion()"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="nav-btn submit" onclick="openSubmitModal()"><i class="fas fa-paper-plane"></i> Submit</button>
+                <button class="nav-btn next" id="nextBtn" onclick="nextQuestion()"><span id="nextLabel">Next</span> <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </nav>
+    </div>
+
+    <div class="palette-overlay" id="paletteOverlay" onclick="closePalette()"></div>
+    <aside class="palette-drawer" id="paletteDrawer">
+        <div class="pal-head"><span>Questions</span><button onclick="closePalette()"><i class="fas fa-times"></i></button></div>
+        <div class="pal-grid" id="paletteGrid"></div>
+    </aside>
+
+    <div class="modal-overlay" id="submitModal">
+        <div class="modal-box">
+            <h3>Submit Test?</h3>
+            <div class="modal-stats-grid">
+                <div class="modal-stat"><div class="modal-stat-num" id="modalAttempted" style="color:var(--green)">0</div><div>Attempted</div></div>
+                <div class="modal-stat"><div class="modal-stat-num" id="modalUnattempted" style="color:var(--text-muted)">0</div><div>Unattempted</div></div>
+            </div>
+            <button class="modal-btn confirm" onclick="confirmSubmit()">Yes, Finish</button>
+            <button class="modal-btn cancel" onclick="closeSubmitModal()">Resume</button>
+        </div>
+    </div>
+
+    <div class="results-screen" id="resultsScreen"><div class="results-box" id="resultsInner"></div></div>
+    <div class="toast" id="toast"><span id="toastText"></span></div>
+
+    <script>
+        const QUESTIONS = [
+            {
+                e: "According to references in the Rigveda, the early Vedic Aryans inhabited a region known as:",
+                h: "ऋग्वेद में दिए गए संदर्भों के अनुसार, प्रारंभिक वैदिक आर्य ऐसे क्षेत्र में रहते थे जिसे _______ कहा जाता है।",
+                oEn: ["Sapta-Sindhu", "Aryavarta", "Madhyadesha", "Brahmavarta"],
+                oHi: ["सप्त-सिंधु", "आर्यावर्त", "मध्यदेश", "ब्रह्मवर्त"],
+                a: 0,
+                sE: "The Early Vedic Aryans lived in the land of the seven rivers called 'Sapta-Sindhu' (Indus and its five tributaries along with the Saraswati).",
+                sH: "प्रारंभिक वैदिक आर्यों का मुख्य निवास क्षेत्र 'सप्त-सिंधु' (सिंधु, सरस्वती और पंजाब की पांच नदियों का क्षेत्र) था।"
+            },
+            {
+                e: "Which among the following best represents the change in society from the Early to the Later Vedic period?",
+                h: "निम्नलिखित में से कौन-सा, प्रारंभिक वैदिक काल से उत्तर वैदिक काल तक समाज में आए परिवर्तन को सर्वोत्तम रूप से दर्शाता है?",
+                oEn: [
+                    "Decline of agriculture and rise in hunting",
+                    "Emergence of a complex varna hierarchy",
+                    "End of religious practices and rituals",
+                    "Shift from settled villages to nomadic life"
+                ],
+                oHi: [
+                    "कृषि में गिरावट और शिकार में वृद्धि",
+                    "एक जटिल वर्ण पदानुक्रम का उद्भव",
+                    "धार्मिक प्रथाओं और अनुष्ठानों का अंत",
+                    "बसे हुए गाँवों से चलवासी (यायावर) जीवन की ओर स्थानांतरण"
+                ],
+                a: 1,
+                sE: "The social structure transformed from flexible occupation-based classes in the Early Vedic age to a rigid, hereditary four-fold varna system in the Later Vedic age.",
+                sH: "प्रारंभिक वैदिक काल की लचीली सामाजिक व्यवस्था उत्तर वैदिक काल में एक जटिल, कठोर और जन्म-आधारित वर्ण पदानुक्रम में परिवर्तित हो गई।"
+            },
+            {
+                e: "Which of the following texts is considered the earliest Vedic composition depicting the life of early Vedic people?",
+                h: "निम्नलिखित में से किस ग्रंथ को प्रारंभिक वैदिक लोगों के जीवन को चित्रित करने वाली सबसे प्राचीन वैदिक रचना माना जाता है?",
+                oEn: ["Samaveda", "Atharvaveda", "Rigveda", "Yajurveda"],
+                oHi: ["सामवेद", "अथर्ववेद", "ऋग्वेद", "यजुर्वेद"],
+                a: 2,
+                sE: "The Rigveda is the oldest known Indo-European literary composition, documenting early Vedic tribal life, geography, and religious hymns.",
+                sH: "ऋग्वेद सबसे प्राचीन वेद है, जो प्रारंभिक वैदिक काल के लोगों के धार्मिक और सामाजिक जीवन का विस्तृत विवरण देता है।"
+            },
+            {
+                e: "Which of the following Vedas is known as the ‘Veda of Music’ or chants?",
+                h: "निम्नलिखित में से किस वेद को 'संगीत का वेद' के रूप में जाना जाता है?",
+                oEn: ["Samaveda", "Atharvaveda", "Rigveda", "Yajurveda"],
+                oHi: ["सामवेद", "अथर्ववेद", "ऋग्वेद", "यजुर्वेद"],
+                a: 0,
+                sE: "Samaveda ('Veda of Chants/Music') is the foundation of Indian classical music, containing verses set to musical melodies sung by Udgatri priests.",
+                sH: "सामवेद को भारतीय शास्त्रीय संगीत का जनक माना जाता है। इसमें यज्ञों के समय गाए जाने वाले मंत्रों का संकलन है।"
+            },
+            {
+                e: "Which of the following best describes the authorship of the Rigveda?",
+                h: "निम्नलिखित में से कौन-सा, ऋग्वेद के कृतित्व का सर्वोत्तम वर्णन करता है?",
+                oEn: [
+                    "It was composed solely by Sage Vyasa and compiled during the Mahabharata era",
+                    "It was dictated by Valmiki as a poetic epic for oral transmission",
+                    "It was written by a single philosopher-king in ancient India",
+                    "It is a collection of hymns composed by various sages over generations"
+                ],
+                oHi: [
+                    "इसकी रचना पूर्ण रूप से ऋषि व्यास ने की थी और महाभारत काल में इसे संकलित किया गया था।",
+                    "इसे वाल्मीकि ने मौखिक प्रसारण के लिए एक काव्य महाकाव्य के रूप में लिखवाया था।",
+                    "इसे प्राचीन भारत में एक ही दार्शनिक-राजा ने लिखा था।",
+                    "यह पीढ़ियों से विभिन्न ऋषियों द्वारा रचित भजनों का संग्रह है।"
+                ],
+                a: 3,
+                sE: "The Rigveda is a compilation of 1,028 suktas composed across generations by diverse families of rishis (such as Vishvamitra, Vashistha, Gritsamada, and Atri).",
+                sH: "ऋग्वेद किसी एक व्यक्ति द्वारा नहीं लिखा गया, बल्कि कई पीढ़ियों में विभिन्न ऋषि-कुटुंबों (विश्वामित्र, वशिष्ठ, भारद्वाज आदि) द्वारा रचित सूक्तों का संकलन है।"
+            },
+            {
+                e: "The early Iron Age in North India is most prominently associated with which pottery culture?",
+                h: "उत्तर भारत में प्रारंभिक लौह युग सबसे प्रमुख रूप से किस मृद्भांड संस्कृति से संबंधित है?",
+                oEn: [
+                    "Painted Grey Ware and Northern Black Polished Ware",
+                    "Painted Grey Ware and Black-and-Red Ware",
+                    "Ochre Coloured Pottery and Black Slipped Ware",
+                    "Northern Black Polished Ware and Red Ware"
+                ],
+                oHi: [
+                    "चित्रित धूसर भांड (PGW) और उत्तरी काले पॉलिश किए गए भांड (NBPW)",
+                    "चित्रित धूसर भांड और काले-और-लाल भांड",
+                    "गैरिक मृद्भांड और काली चिकनी मिट्टी के घोल वाले भांड",
+                    "उत्तरी काले पॉलिश किए गए भांड और लाल भांड"
+                ],
+                a: 0,
+                sE: "The transition to the Iron Age and the Later Vedic culture in northern India corresponds archaeologically with the Painted Grey Ware (PGW) and later Northern Black Polished Ware (NBPW) phases.",
+                sH: "उत्तर भारत में प्रारंभिक लौह युग और उत्तर वैदिक संस्कृति का पुरातात्विक संबंध मुख्य रूप से चित्रित धूसर मृद्भांड (PGW) और बाद के NBPW चरण से है।"
+            },
+            {
+                e: "The Rigveda mentions the terms arya varna and dasa varna. In the Early Vedic context, these terms indicate:",
+                h: "ऋग्वेद में 'आर्य वर्ण' और 'दास वर्ण' शब्दों का उल्लेख है। प्रारंभिक वैदिक संदर्भ में, ये शब्द किसे इंगित करते हैं?",
+                oEn: [
+                    "Distinction between Vedic people and non-Vedic groups",
+                    "Occupational guilds based on trade specialization",
+                    "Fourfold caste hierarchy based strictly on birth",
+                    "Political offices within tribal administration"
+                ],
+                oHi: [
+                    "वैदिक व्यक्तियों और गैर-वैदिक समूहों के बीच अंतर",
+                    "व्यापार विशेषज्ञता पर आधारित व्यावसायिक श्रेणी",
+                    "जन्म पर आधारित चतुर्विध जाति पदानुक्रम",
+                    "जनजातीय प्रशासन के अंतर्गत राजनीतिक पद"
+                ],
+                a: 0,
+                sE: "In the early Rigvedic period, 'varna' referred primarily to color or identity, distinguishing the incoming Vedic Aryans from indigenous non-Vedic Dasas/Dasyus.",
+                sH: "प्रारंभिक ऋग्वैदिक काल में 'आर्य वर्ण' और 'दास वर्ण' शब्द वैदिक आर्यों और मूल गैर-वैदिक समूहों के बीच भाषाई व सांस्कृतिक भेद को दर्शाते थे।"
+            },
+            {
+                e: "Which of the following was a function of the Vaishya class in later Vedic society?",
+                h: "उत्तरवैदिक समाज में वैश्य वर्ग का कार्य क्या था?",
+                oEn: ["Subordinated class", "Ruling class", "Ritual specialists", "Producing class"],
+                oHi: ["अधीनस्थ वर्ग", "शासक वर्ग", "अनुष्ठान विशेषज्ञ", "उत्पादक वर्ग (Producing class)"],
+                a: 3,
+                sE: "Vaishyas (derived from 'vis') formed the common producing class engaged in agriculture, cattle-rearing, artisanal craft, and trade, and were the sole taxpayers (balihrit).",
+                sH: "उत्तर वैदिक काल में वैश्य समाज का मुख्य उत्पादक वर्ग (कृषि, पशुपालन और व्यापार में संलग्न) था, जो कर चुकाने का मुख्य स्रोत था।"
+            },
+            {
+                e: "Which Vedic text, composed around 1000 BCE, contains 1028 hymns dedicated to various deities?",
+                h: "किस वैदिक ग्रंथ की रचना लगभग 1000 ईसा पूर्व में हुई थी, जिसमें विभिन्न देवी-देवताओं की स्तुति के लिए 1028 भजन संकलित हैं?",
+                oEn: ["Yajur Veda", "Rig Veda", "Atharva Veda", "Sama Veda"],
+                oHi: ["यजुर्वेद", "ऋग्वेद", "अथर्ववेद", "सामवेद"],
+                a: 1,
+                sE: "The Rig Veda consists of 1,028 suktas (hymns) arranged into 10 mandalas dedicated to Agni, Indra, Varuna, and other deities.",
+                sH: "ऋग्वेद में कुल 1028 सूक्त (भजन) और 10 मंडल हैं, जिनमें देवताओं की स्तुतियां की गई हैं।"
+            },
+            {
+                e: "Which of the following technological advances enabled the cultivation of heavier, wetter soils in the early Iron Age?",
+                h: "निम्नलिखित में से किस तकनीकी उन्नति ने प्रारंभिक लौह युग में भारी, गीली मिट्टी की खेती को सक्षम किया?",
+                oEn: [
+                    "Iron ploughshares and axes",
+                    "Copper sickles and knives",
+                    "Stone microliths and scrapers",
+                    "Bronze chisels and spades"
+                ],
+                oHi: [
+                    "लौह हल (Iron ploughshares) और कुल्हाड़ियां",
+                    "तांबे के हंसिया और चाकू",
+                    "पत्थर के सूक्ष्मपाषाण और खुरचनी",
+                    "कांस्य की छेनी और फावड़े"
+                ],
+                a: 0,
+                sE: "The introduction of hard iron axes enabled clearing dense forests of the middle Gangetic plains, and heavy iron-tipped ploughshares made tilling tough alluvial soil possible.",
+                sH: "लोहे की कुल्हाड़ियों से घने जंगलों को काटा गया और लोहे के फाल वाले हलों ने गंगा घाटी की भारी व कठोर मिट्टी की गहरी जुताई संभव बनाई।"
+            },
+            {
+                e: "What did the term 'gopati' refer to in Early Vedic society?",
+                h: "प्रारंभिक वैदिक समाज में 'गोपति' शब्द का क्या अर्थ था?",
+                oEn: [
+                    "Chief who protects cows",
+                    "Priest who conducts rituals",
+                    "Warrior who leads battles",
+                    "Head of the family"
+                ],
+                oHi: [
+                    "प्रमुख जो गायों की रक्षा करता है (राजा/जन का नेता)",
+                    "पुजारी जो अनुष्ठान करता है",
+                    "योद्धा जो युद्धों का नेतृत्व करता है",
+                    "परिवार का मुखिया"
+                ],
+                a: 0,
+                sE: "In pastoral Rigvedic society, cattle was the chief form of wealth; the tribal king/chieftain was termed 'gopati' (protector of cattle).",
+                sH: "ऋग्वैदिक काल में गाय सबसे मूल्यवान संपत्ति थी, इसलिए कबीले के प्रधान या राजा को 'गोपति' (गायों का संरक्षक/स्वामी) कहा जाता था।"
+            },
+            {
+                e: "Which of the four Vedas is known as 'Veda of Sacrificial Formulas' and contains prose formulas applicable to various rites, along with verses intended for a similar purpose?",
+                h: "चार वेदों में से किसे 'यज्ञ सूत्रों का वेद' के रूप में जाना जाता है और इसमें विभिन्न संस्कारों पर लागू होने वाले गद्य सूत्र, साथ ही समान उद्देश्य वाले श्लोक शामिल हैं?",
+                oEn: ["Atharvaveda", "Samaveda", "Yajurveda", "Rigveda"],
+                oHi: ["अथर्ववेद", "सामवेद", "यजुर्वेद", "ऋग्वेद"],
+                a: 2,
+                sE: "Yajurveda is the ritualistic Veda containing procedural prose formulas and mantras recited by the Adhvaryu priest during sacrifices.",
+                sH: "यजुर्वेद को कर्मकांड और यज्ञ के नियमों का वेद कहा जाता है, जिसमें गद्य और पद्य दोनों रूपों में यज्ञीय सूत्र मिलते हैं।"
+            },
+            {
+                e: "According to Vedic texts, what was the function of 'Sangrahitri'?",
+                h: "वैदिक ग्रंथों के अनुसार, 'संग्रहित्री' का क्या कार्य था?",
+                oEn: ["Treasurer / Cashier", "tax collector", "Charioteer", "Spies/Messengers"],
+                oHi: ["कोषाध्यक्ष / खजांची (Treasurer)", "कर संग्राहक (भागदुघ)", "सारथी (सूत)", "गुप्तचर/दूत"],
+                a: 0,
+                sE: "In the Later Vedic Ratnin administrative list, 'Sangrahitri' served as the treasurer/custodian of the royal treasury, while 'Bhagadugha' was the tax collector.",
+                sH: "वैदिक काल में राजा के प्रमुख 12 रत्नीनों में 'संग्रहीतृ' (Sangrahitri) का कार्य कोषाध्यक्ष (Treasurer) का था, जबकि कर संग्रहकर्ता 'भागदुघ' कहलाता था।"
+            },
+            {
+                e: "Which Vedic God falls under the category of ‘Prithivisthana’ (Terrestrial God)?",
+                h: "कौन-सा वैदिक देवता ‘पृथ्वीस्थान’ (स्थलीय देवता) की श्रेणी में आता है?",
+                oEn: ["Vishnu", "Brihaspati", "Indra", "Varuna"],
+                oHi: ["विष्णु", "बृहस्पति", "इंद्र", "वरुण"],
+                a: 1,
+                sE: "Yaska classified Vedic deities into three realms: Terrestrial/Earthly (Prithivisthana: Agni, Soma, Prithvi, Brihaspati), Atmospheric (Antarikshasthana: Indra, Rudra, Vayu), and Celestial (Dyusthana: Surya, Varuna, Vishnu).",
+                sH: "यास्क के वर्गीकरण के अनुसार अग्नि, पृथ्वी, सोम और बृहस्पति 'पृथ्वीस्थानीय' (स्थलीय) देवता हैं; इंद्र अंतरिक्षीय और वरुण/विष्णु द्युस्थानीय (आकाशीय) देवता हैं।"
+            },
+            {
+                e: "Which among the following is the oldest and biggest amongst all the four Vedas?",
+                h: "निम्नलिखित में से कौन-सा चारों वेदों में सबसे पुराना और सबसे बड़ा है?",
+                oEn: ["Rig Veda", "Samaveda", "Atharva Veda", "Yajur Veda"],
+                oHi: ["ऋग्वेद", "सामवेद", "अथर्ववेद", "यजुर्वेद"],
+                a: 0,
+                sE: "Rig Veda is both the oldest and most extensive of the four Vedas, containing 10 mandalas, 1,028 suktas, and 10,552 mantras.",
+                sH: "ऋग्वेद चारों वेदों में सर्वाधिक प्राचीन और वृहद है।"
+            },
+            {
+                e: "How many major branches (Samhitas) of Yajurveda are there?",
+                h: "यजुर्वेद की कितनी मुख्य शाखाएं हैं?",
+                oEn: ["4", "5", "3", "2"],
+                oHi: ["4", "5", "3", "2 (शुक्ल और कृष्ण)"],
+                a: 3,
+                sE: "Yajurveda is broadly bifurcated into two main branches: Shukla Yajurveda (White Yajurveda) and Krishna Yajurveda (Black Yajurveda).",
+                sH: "यजुर्वेद की दो प्रमुख शाखाएं हैं: शुक्ल यजुर्वेद और कृष्ण यजुर्वेद।"
+            },
+            {
+                e: "Rigveda consists of a collection of ___________ hymns.",
+                h: "ऋग्वेद में सूक्तों (भजनों) का संग्रह है:",
+                oEn: ["3028 hymns", "2028 hymns", "4028 hymns", "1028 hymns"],
+                oHi: ["3028 भजन", "2028 भजन", "4028 भजन", "1028 सूक्त (ह्यम्न्स)"],
+                a: 3,
+                sE: "The Rigveda Samhita consists of exactly 1,028 hymns (1,017 regular + 11 valakhilya hymns).",
+                sH: "ऋग्वेद में कुल 1028 सूक्त (1017 मूल + 11 बालखिल्य) हैं।"
+            },
+            {
+                e: "Which of the following Vedas is also called \"Book of Songs\", \"Veda of Mantras\" or \"Yoga of Songs\"?",
+                h: "निम्नलिखित में से किस वेद को \"गीतों की पुस्तक\", \"मंत्रों का वेद\" या \"गीतों का योग\" भी कहा जाता है?",
+                oEn: ["Yajurveda", "Rigveda", "Atharvaveda", "Samveda"],
+                oHi: ["यजुर्वेद", "ऋग्वेद", "अथर्ववेद", "सामवेद"],
+                a: 3,
+                sE: "Samaveda consists almost entirely of melodic hymns meant to be chanted during rituals, earning it the epithet 'Book of Songs'.",
+                sH: "सामवेद को 'Book of Chants' या 'गीतों की पुस्तक' कहा जाता है।"
+            },
+            {
+                e: "Which of the following Vedas is primarily a ‘Book of rituals’?",
+                h: "निम्न में से किस वेद को 'कर्मकांड ग्रंथ' (Book of rituals) के रूप में जाना जाता है?",
+                oEn: ["The Yajurveda", "The Atharvaveda", "The Samaveda", "The Rigveda"],
+                oHi: ["यजुर्वेद (The Yajurveda)", "अथर्ववेद", "सामवेद", "ऋग्वेद"],
+                a: 0,
+                sE: "Yajurveda serves as the ritual priest's guidebook, detailing sacrificial rites, altars, and operational formulas.",
+                sH: "यजुर्वेद को मुख्य रूप से कर्मकांडों और यज्ञीय विधियों का ग्रंथ माना जाता है।"
+            },
+            {
+                e: "Which Veda contains the maximum number of verses?",
+                h: "किस वेद में सबसे अधिक श्लोक/मंत्र हैं?",
+                oEn: ["Rig Veda", "Atharva Veda", "Sama Veda", "Yajur Veda"],
+                oHi: ["ऋग्वेद", "अथर्ववेद", "सामवेद", "यजुर्वेद"],
+                a: 0,
+                sE: "The Rigveda has the maximum number of verses (richas), totaling over 10,500 verses across 10 mandalas.",
+                sH: "ऋग्वेद में सर्वाधिक ऋचाएं (लगभग 10,580 श्लोक/मंत्र) समाहित हैं।"
+            },
+            {
+                e: "How many stages of life (Ashramas) are prescribed in classical Hindu philosophy?",
+                h: "प्रारंभिक हिंदू दर्शन में जीवन के कितने चरण (आश्रम) निर्धारित किए गए हैं?",
+                oEn: ["Four", "Five", "Three", "Two"],
+                oHi: ["चार (Four)", "पांच", "तीन", "दो"],
+                a: 0,
+                sE: "The four ashramas are Brahmacharya (student), Grihastha (householder), Vanaprastha (retired/forest dweller), and Sannyasa (renunciant).",
+                sH: "हिंदू दर्शन में जीवन के चार आश्रम बताए गए हैं: ब्रह्मचर्य, गृहस्थ, वानप्रस्थ और संन्यास।"
+            },
+            {
+                e: "In Hinduism, the deity ___________ was regarded as the 'Lord of Plants/Trees', healer of disease, and bestower of health and immortality.",
+                h: "हिंदू धर्म में देवता/देवी ___________ \"वृक्षों/औषधियों के स्वामी\", रोगों के उपचारक और अमरता के रस के रूप में पूज्य थे।",
+                oEn: ["Yama", "Soma", "Usha", "Varuni"],
+                oHi: ["यम", "सोम (Soma)", "उषा", "वरुणी"],
+                a: 1,
+                sE: "Soma is celebrated in the Rigveda (especially the entire 9th Mandala) as the lord of plants, an invigorating sacred drink, and healer of ailments.",
+                sH: "ऋग्वेद के 9वें मंडल में वर्णित देवता 'सोम' को वनस्पतियों और औषधियों का अधिपति माना गया है।"
+            },
+            {
+                e: "The Rig Veda is organized into 10 mandalas consisting of _______ suktas.",
+                h: "ऋग्वेद में 10 मंडल हैं, जिनमें _______ सूक्त शामिल हैं।",
+                oEn: ["1,028", "1,210", "1,128", "1,230"],
+                oHi: ["1,028", "1,210", "1,128", "1,230"],
+                a: 0,
+                sE: "The Rigveda contains 1,028 suktas across its 10 mandalas.",
+                sH: "ऋग्वेद 10 मंडलों और 1028 सूक्तों में विभाजित है।"
+            },
+            {
+                e: "Which of the following scriptures is NOT a part of orthodox Vedic literature (Shruti)?",
+                h: "निम्नलिखित में से कौन सा ग्रंथ वैदिक साहित्य का हिस्सा नहीं है?",
+                oEn: ["Upanishads", "Brahmanas", "Aranyakas", "Pitakas"],
+                oHi: ["उपनिषद", "ब्राह्मण", "आरण्यक", "पिटक (Pitakas)"],
+                a: 3,
+                sE: "Vedic literature includes Samhitas, Brahmanas, Aranyakas, and Upanishads. Pitakas (Sutta, Vinaya, Abhidhamma) belong to Buddhist canonical literature.",
+                sH: "पिटक (त्रिपिटक) बौद्ध धर्म का धर्मग्रंथ है, जबकि उपनिषद, ब्राह्मण और आरण्यक वैदिक साहित्य का अभिन्न अंग हैं।"
+            },
+            {
+                e: "The Aitareya Upanishad belongs to the Aitareya Aranyaka of which Veda?",
+                h: "ऐतरेय उपनिषद किस वेद के ऐतरेय आरण्यक से संबंधित है?",
+                oEn: ["Rig Veda", "Atharva Veda", "Yajur Veda", "Sama Veda"],
+                oHi: ["ऋग्वेद (Rig Veda)", "अथर्ववेद", "यजुर्वेद", "सामवेद"],
+                a: 0,
+                sE: "Aitareya Brahmana, Aitareya Aranyaka, and Aitareya Upanishad all belong to the Rigveda.",
+                sH: "ऐतरेय ब्राह्मण, आरण्यक और उपनिषद ऋग्वेद की शाखा से संबंधित हैं।"
+            },
+            {
+                e: "Which Upaveda is associated with architecture, engineering, and craftsmanship?",
+                h: "निम्नलिखित में से कौन सा उपवेद शिल्प, वास्तुकला और धन विज्ञान से संबंधित है?",
+                oEn: ["Gandharva Veda", "Ayurveda", "Shilpa Veda / Arthaveda", "Dhanurveda"],
+                oHi: ["गंधर्व वेद", "आयुर्वेद", "शिल्प वेद / स्थापत्य वेद", "धनुर्वेद"],
+                a: 2,
+                sE: "Shilpa Veda (or Sthapatyaveda/Arthaveda) deals with architecture, sculpture, and civil engineering.",
+                sH: "शिल्प वेद (या स्थापत्य वेद) भवन निर्माण, वास्तुकला और मूर्तिकला से संबंधित उपवेद है।"
+            },
+            {
+                e: "Which of the following Gods is referred to as 'Purandara' (destroyer of forts) in the Rigveda?",
+                h: "ऋग्वेद में किस भगवान को 'पुरंदर' (किलों को तोड़ने वाला) कहा गया है?",
+                oEn: ["Shiva", "Soma", "Indra", "Vishnu"],
+                oHi: ["शिव", "सोम", "इंद्र (Indra)", "विष्णु"],
+                a: 2,
+                sE: "Indra is called 'Purandara' (breaker of strongholds/forts) and is the most celebrated warrior-god in the Rigveda with 250 dedicated hymns.",
+                sH: "ऋग्वेद में इंद्र को 'पुरंदर' (किलों को ध्वस्त करने वाला) कहा गया है और उनके सम्मान में सर्वाधिक 250 सूक्त हैं।"
+            },
+            {
+                e: "Which of the six orthodox Indian philosophies (Shad-Darshana) strongly focuses on logic and epistemology?",
+                h: "निम्नलिखित में से कौन सा दर्शन तार्किक चिंतन और तर्कशास्त्र की तकनीक में विश्वास करता है?",
+                oEn: ["Sankhya", "Nyaya", "Yoga", "Vedanta"],
+                oHi: ["सांख्य", "न्याय (Nyaya)", "योग", "वेदान्त"],
+                a: 1,
+                sE: "Nyaya philosophy, founded by Sage Gautama, is the school of logic, reasoning, and systematic epistemology.",
+                sH: "महर्षि गौतम द्वारा प्रतिपादित 'न्याय दर्शन' विशुद्ध रूप से तर्कशास्त्र, प्रमाण और तार्किक चिंतन पर आधारित है।"
+            },
+            {
+                e: "Which of the following Vedic sacrifices is associated with the sacrifice of a royal horse to establish political supremacy?",
+                h: "निम्नलिखित में से कौन सा यज्ञ घोड़े की बलि और साम्राज्य विस्तार से संबंधित है?",
+                oEn: ["Vajapeya Yajna", "Agnishtoma Yajna", "Ashvamedha Yajna", "Rajasuya Yajna"],
+                oHi: ["वाजपेय यज्ञ", "अग्निष्टोम यज्ञ", "अश्वमेध यज्ञ (Ashwamedha Yajna)", "राजसूय यज्ञ"],
+                a: 2,
+                sE: "Ashvamedha Yajna was a royal horse sacrifice performed by an ambitious king to claim imperial sovereignty over lands roamed by the royal horse.",
+                sH: "अश्वमेध यज्ञ में राजा के घोड़े को स्वतंत्र विचरण के लिए छोड़ा जाता था और अंत में उसकी बलि देकर सार्वभौम संप्रभुता स्थापित की जाती थी।"
+            },
+            {
+                e: "Which sacred texts provide the primary source of historical information regarding the early Vedic period?",
+                h: "निम्नलिखित में से कौन-सा पवित्र ग्रंथ प्रारंभिक वैदिक काल के सामाजिक और आर्थिक जीवन के बारे में अधिकांश जानकारी प्रदान करता है?",
+                oEn: ["Upanishads", "Mahabharata", "Ramayana", "Vedas (principally Rigveda)"],
+                oHi: ["उपनिषद", "महाभारत", "रामायण", "वेद (मुख्यतः ऋग्वेद)"],
+                a: 3,
+                sE: "The Vedas, specifically the Rigveda Samhita, form the foundational and singular primary literary source for reconstructing early Vedic life.",
+                sH: "प्रारंभिक वैदिक काल की सामाजिक, राजनीतिक व आर्थिक स्थिति का एकमात्र मुख्य स्रोत 'वेद' (विशेषकर ऋग्वेद) हैं।"
+            },
+            {
+                e: "The Samhitas represent the ______ segment/part of each Veda, comprising a compilation of core mantras.",
+                h: "संहिताएं प्रत्येक वेद के ______ खंड/भाग का प्रतिनिधित्व करती हैं, जिसमें मंत्रों का संकलन होता है।",
+                oEn: ["First", "Second", "Fourth", "Third"],
+                oHi: ["प्रथम (First)", "द्वितीय", "चतुर्थ", "तृतीय"],
+                a: 0,
+                sE: "A Vedic corpus has four tiers: 1. Samhitas (hymns/mantras), 2. Brahmanas (ritual texts), 3. Aranyakas (forest philosophy), and 4. Upanishads (spiritual wisdom).",
+                sH: "वैदिक साहित्य में संहिताएं सबसे पहला (प्रथम) भाग होती हैं, जिनमें मूल मंत्रों का संकलन होता है।"
+            },
+            {
+                e: "The word 'Vaishya' etymologically originates from which Vedic word?",
+                h: "वैदिक काल में 'वैश्य' शब्द किस मूल शब्द से आया है?",
+                oEn: ["Vigraha", "Vidya", "Vish", "Vasnva"],
+                oHi: ["विग्रह", "विद्या", "विश (Vish)", "वसन्वा"],
+                a: 2,
+                sE: "The word 'Vaishya' derives from the Sanskrit root 'vis', which means clan, community, people, or settled commoners.",
+                sH: "'वैश्य' शब्द की उत्पत्ति वैदिक शब्द 'विश' (जनसाधारण या कबीला) से हुई है।"
+            },
+            {
+                e: "Which of the following statements is/are correct in the context of Vedic Brahmanas?\nI. Aitareya Brahmana is associated with the Rigveda.\nII. Panchavimsha Brahmana is associated with the Samaveda.",
+                h: "वैदिक ब्राह्मणों के संदर्भ में निम्नलिखित में से कौन सा/से कथन सही है/हैं?\nI. ऐतरेय ब्राह्मण ऋग्वेद से संबंधित था।\nII. पंचविंश ब्राह्मण सामवेद से संबंधित था।",
+                oEn: ["Neither I nor II", "Only II", "Both I and II", "Only I"],
+                oHi: ["न तो I और न ही II", "केवल II", "I और II दोनों", "केवल I"],
+                a: 2,
+                sE: "Both statements are correct. Aitareya and Kaushitaki belong to Rigveda; Panchavimsha (Tandya) and Jaiminiya belong to Samaveda.",
+                sH: "दोनों कथन सत्य हैं। ऐतरेय ब्राह्मण ऋग्वेद का और पंचविंश (ताण्ड्य) ब्राह्मण सामवेद का प्रसिद्ध ब्राह्मण ग्रंथ है।"
+            },
+            {
+                e: "What was the role of the ‘Rajanya’ in society during the Vedic period?",
+                h: "वैदिक काल में समाज में ‘राजन्य’ की क्या भूमिका थी?",
+                oEn: ["Kings and warriors", "Farmers and labourers", "Priests and scholars", "Merchants and traders"],
+                oHi: ["राजा और योद्धा (Kshatriyas)", "किसान और मजदूर", "पुजारी और विद्वान", "व्यापारी"],
+                a: 0,
+                sE: "'Rajanya' was the Rigvedic term used for the ruling warrior aristocracy, which later came to be formalized as the Kshatriya varna.",
+                sH: "ऋग्वैदिक काल में शासक वर्ग और योद्धाओं को 'राजन्य' कहा जाता था, जो आगे चलकर क्षत्रिय कहलाए।"
+            },
+            {
+                e: "Out of the traditional _______ Upanishads, _______ Upanishads are considered Mukhya (principal).",
+                h: "पारंपरिक _______ उपनिषदों में से _______ उपनिषद मुख्य (मुख्योपनिषद) माने जाते हैं।",
+                oEn: ["108, 11", "116, 22", "100, 12", "99, 10"],
+                oHi: ["108, 11", "116, 22", "100, 12", "99, 10"],
+                a: 0,
+                sE: "According to the Muktika canon, there are 108 recognized Upanishads, of which 10 to 11 are considered primary (Mukhya) as commented upon by Adi Shankara.",
+                sH: "मुक्तिकोपनिषद के अनुसार कुल 108 उपनिषद हैं, जिनमें से 11 उपनिषदों को मुख्य माना गया है।"
+            },
+            {
+                e: "In the early Rigvedic period, the tribal clan or people were known as ______.",
+                h: "आर्य समाज/कबीले को छोटी इकाइयों या कबीलों में बांटा गया था, जिन्हें ______ कहा जाता था।",
+                oEn: ["Sabha", "Vish / Jana", "Samiti", "Grama"],
+                oHi: ["सभा", "विश (Vish) / जन", "समिति", "ग्राम"],
+                a: 1,
+                sE: "The tribal society was divided into clans termed 'Vis' (and larger tribes as 'Jana'), with local settlements termed 'Grama'.",
+                sH: "ऋग्वैदिक काल में कबीले को 'जन' और उसकी छोटी शाखाओं/उप-कबीलों को 'विश' कहा जाता था।"
+            },
+            {
+                e: "Which of the following sacred rivers flowed through the Sapta-Sindhu region and later dried up?",
+                h: "निम्नलिखित में से कौन-सी नदी सप्त-सिंधु क्षेत्र में बहती थी और बाद में सूख गई?",
+                oEn: ["Chenab", "Yamuna", "Saraswati", "Jhelum"],
+                oHi: ["चिनाब", "यमुना", "सरस्वती (Saraswati)", "झेलम"],
+                a: 2,
+                sE: "River Saraswati (praised as Naditama in Rigveda) was a perennial river in the Sapta-Sindhu region that dried up due to tectonic and climatic changes.",
+                sH: "ऋग्वेद में 'नदीतमा' (सर्वश्रेष्ठ नदी) कही जाने वाली सरस्वती नदी बाद में राजस्थान और घग्गर क्षेत्र में लुप्त हो गई।"
+            },
+            {
+                e: "The language used in the composition of the Upanishads is _____.",
+                h: "उपनिषदों में प्रयुक्त भाषा कौन-सी है?",
+                oEn: ["Pali", "Brahmi", "Sanskrit", "Prakrit"],
+                oHi: ["पाली", "ब्राह्मी", "संस्कृत (Vedic Sanskrit)", "प्राकृत"],
+                a: 2,
+                sE: "The Upanishads were composed in Classical and late Vedic Sanskrit, whereas Pali and Prakrit were used later by Buddhists and Jains.",
+                sH: "उपनिषदों की रचना वैदिक एवं उत्तर-वैदिक संस्कृत भाषा में हुई है।"
+            },
+            {
+                e: "Which of these is NOT one of the four canonical Vedas?",
+                h: "इनमें से कौन एक वेद नहीं है?",
+                oEn: ["Atharva Veda", "Rig Veda", "Yajur Veda", "Soma Veda"],
+                oHi: ["अथर्ववेद", "ऋग्वेद", "यजुर्वेद", "सोम वेद"],
+                a: 3,
+                sE: "The four Vedas are Rigveda, Samaveda, Yajurveda, and Atharvaveda. 'Soma Veda' does not exist (Soma is a deity and ritual plant in the Rigveda).",
+                sH: "'सोम वेद' नाम का कोई वेद नहीं है; चार वेद ऋग्वेद, यजुर्वेद, सामवेद और अथर्ववेद हैं।"
+            },
+            {
+                e: "The indigenous inhabitants of India who did not adhere to the Vedic sacrificial rituals are referred to in Vedic texts as:",
+                h: "भारत के स्वदेशी निवासी जो वैदिक यज्ञ प्रणाली का पालन नहीं करते थे, उन्हें वैदिक ग्रंथों में क्या कहा गया है?",
+                oEn: ["Dasyus", "Dasas", "Dravidas", "Aryans"],
+                oHi: ["दस्यु (Dasyus)", "दास", "द्रविड़", "आर्य"],
+                a: 0,
+                sE: "The Rigveda calls hostile non-sacrificing indigenous opponents 'Dasyus' (described as a-karman, a-devayu, and mridhravach).",
+                sH: "ऋग्वेद में वैदिक धर्म का पालन न करने वाले और विरोधी मूल निवासियों को 'दस्यु' कहा गया है।"
+            },
+            {
+                e: "Which of the four Vedas is traditionally paired with the Upaveda known as Gandharvaveda?",
+                h: "चार वेदों में से कौन सा वेद पारंपरिक रूप से 'गंधर्ववेद' नामक उपवेद से जुड़ा हुआ है?",
+                oEn: ["Yajurveda", "Atharvaveda", "Samaveda", "Rigveda"],
+                oHi: ["यजुर्वेद", "अथर्ववेद", "सामवेद", "ऋग्वेद"],
+                a: 2,
+                sE: "Gandharvaveda (the science of music, dance, and arts) is the Upaveda of the musical Samaveda.",
+                sH: "गायन और वादन से संबंधित 'गंधर्ववेद' सामवेद का उपवेद है।"
+            },
+            {
+                e: "During the Later Vedic period, which of the following animals was specifically used for tilling heavy, marshy land?",
+                h: "उत्तर वैदिक काल के दौरान, किस जानवर का विशेष रूप से दलदली/भारी भूमि की जुताई के लिए उपयोग किया जाता था?",
+                oEn: ["Cow", "Buffalo", "Horse", "Elephant"],
+                oHi: ["गाय", "भैंस (Buffalo)", "घोड़ा", "हाथी"],
+                a: 1,
+                sE: "Water buffaloes were valued in the lower and middle Gangetic plains for ploughing wet, marshy alluvial soils.",
+                sH: "उत्तर वैदिक काल में गंगा के तराई और दलदली क्षेत्रों की जुताई में भैंसों का उपयोग बढ़ा।"
+            },
+            {
+                e: "What is the primary spiritual and liturgical content of the early Vedic hymns?",
+                h: "प्रारंभिक वैदिक काल के दौरान रचित वेदों की मुख्य सामग्री क्या है?",
+                oEn: ["War strategies", "Agricultural manuals", "Laws and rituals", "Prayers and hymns to nature deities"],
+                oHi: ["युद्ध रणनीतियाँ", "कृषि मैनुअल", "कानून और अनुष्ठान", "प्रार्थनाएं और भजन (Prayers and hymns)"],
+                a: 3,
+                sE: "The Rigveda primarily consists of devotional poetic hymns (mantras) and invocations addressing natural forces personified as gods.",
+                sH: "प्रारंभिक वैदिक साहित्य की मूल सामग्री प्रकृति की शक्तियों और देवताओं की स्तुति में रची गई प्रार्थनाएं और भजन हैं।"
+            },
+            {
+                e: "The term 'gomat' in the Rigveda refers to which of the following?",
+                h: "ऋग्वेद में 'गोमत' शब्द निम्नलिखित में से किसे संदर्भित करता है?",
+                oEn: ["A warrior", "A priest", "A wealthy person owning many cattle", "A milkmaid"],
+                oHi: ["एक योद्धा", "एक पुजारी", "एक धनी व्यक्ति (A wealthy person)", "एक ग्वालन"],
+                a: 2,
+                sE: "In pastoral Vedic society, wealth was measured in cattle; hence, a rich man possessing numerous cows was designated as 'Gomat'.",
+                sH: "ऋग्वैदिक काल में जिसके पास बहुत सारी गाएं होती थीं, उस धनी व्यक्ति को 'गोमत' कहा जाता था।"
+            },
+            {
+                e: "Which of the following Vedic words literally means 'search for cows' and historically came to mean 'war/battle'?",
+                h: "निम्नलिखित में से किस वैदिक शब्द का शाब्दिक अर्थ 'गायों की खोज' है और यह युद्ध को भी संदर्भित करता है?",
+                oEn: ["Duhitri", "Gaveshana", "Gopala", "Gomat"],
+                oHi: ["दुहिता", "गवेषणा (Gaveshana)", "गोपाल", "गोमत"],
+                a: 1,
+                sE: "Cattle raids were the most common conflicts in the Early Vedic age; thus, 'Gaveshana' (literally search for cows) became the standard word for war.",
+                sH: "'गवेषणा' का शाब्दिक अर्थ 'गायों की खोज' था, जो आगे चलकर युद्ध (लड़ाई) का पर्याय बन गया।"
+            },
+            {
+                e: "Which of the following Vedas mentions women scholars like Viswavara, Apala, and Ghosa who composed hymns?",
+                h: "निम्नलिखित में से किस वेद में विश्ववारा, अपाला और घोषा जैसी विदुषी महिलाओं के नाम मिलते हैं जिन्होंने मंत्रों की रचना की थी?",
+                oEn: ["The Rigveda", "The Samaveda", "The Yajurveda", "The Atharvaveda"],
+                oHi: ["ऋग्वेद (The Rigveda)", "सामवेद", "यजुर्वेद", "अथर्ववेद"],
+                a: 0,
+                sE: "The Rigveda includes mantras composed by female rishis (Brahmavadinis) including Ghosha, Lopamudra, Apala, and Vishwavara.",
+                sH: "ऋग्वेद में अपाला, घोषा, विश्ववारा और लोपामुद्रा जैसी विदुषी स्त्रियों द्वारा रचित ऋचाएं संकलित हैं।"
+            },
+            {
+                e: "With regard to their primary economic occupation, the early Vedic Aryans were predominantly:",
+                h: "अपने प्राथमिक व्यवसाय के संबंध में, प्रारंभिक वैदिक आर्य मुख्यतः क्या थे?",
+                oEn: ["Fishermen and hunters", "Merchants and traders", "Priests", "Pastoralists"],
+                oHi: ["मछुआरें और शिकारी", "व्यापारी और सौदागर", "पुजारी", "पशुपालक (Pastoralists)"],
+                a: 3,
+                sE: "The Early Vedic economy was predominantly pastoral and semi-nomadic, with agriculture playing a secondary role.",
+                sH: "प्रारंभिक वैदिक आर्यों का मुख्य व्यवसाय पशुपालन (Pastoralism) था और कृषि का स्थान गौण था।"
+            },
+            {
+                e: "The Rig Veda consists of 1028 hymns, organized into ten books known as ________.",
+                h: "ऋग्वेद में 1028 ऋचाएं हैं, जिन्हें दस पुस्तकों में व्यवस्थित किया गया है जिन्हें ________ कहा जाता है।",
+                oEn: ["Mandalas", "Padapatha", "Anudaatta", "Suktas"],
+                oHi: ["मंडल (Mandalas)", "पादपस्थ", "अनुदात्त", "सूक्त"],
+                a: 0,
+                sE: "The 10 books or chapters of the Rigveda are known as Mandalas.",
+                sH: "ऋग्वेद की 10 पुस्तकों (अध्यायों) को 'मंडल' कहा जाता है।"
+            },
+            {
+                e: "The systematic development of Sanskrit grammar is credited to Panini in his landmark treatise named ________.",
+                h: "संस्कृत व्याकरण का व्यवस्थित विकास पाणिनी की किस प्रसिद्ध पुस्तक से माना जाता है?",
+                oEn: ["Ashtadhyayi", "Lalitavistara", "Mahavastu", "Buddhacharita"],
+                oHi: ["अष्टाध्यायी (Ashtadhyayi)", "ललितविस्तार", "महावस्तु", "बुद्धचरित"],
+                a: 0,
+                sE: "Panini's 'Ashtadhyayi' (8 chapters of grammatical rules composed around 5th–4th century BCE) formalized classical Sanskrit grammar.",
+                sH: "महर्षि पाणिनी ने संस्कृत व्याकरण का प्रसिद्ध ग्रंथ 'अष्टाध्यायी' लिखा था।"
+            },
+            {
+                e: "What does the root term 'Yajur' in 'Yajur Veda' signify?",
+                h: "'यजुर्वेद' में 'यजुर' शब्द का क्या अर्थ है?",
+                oEn: ["Life", "Nature", "Sacrifice / Worship", "Truth"],
+                oHi: ["जीवन", "प्रकृति", "यज्ञ / समर्पण / त्याग (Sacrifice)", "सत्य"],
+                a: 2,
+                sE: "'Yajus' in Sanskrit denotes sacrificial formulas, acts of reverence, or sacrificial prayer.",
+                sH: "'यजुर्' शब्द का अर्थ यज्ञीय मंत्र, समर्पण या धार्मिक बलिदान (Sacrifice) होता है।"
+            },
+            {
+                e: "Which of the following is NOT one of the three primary pitch accents used in Vedic chanting?",
+                h: "निम्नलिखित में से कौन-सा वैदिक मंत्रोच्चार में प्रयुक्त होने वाले तीन प्राथमिक स्वरों में से एक नहीं है?",
+                oEn: ["Svarita", "Mandrata", "Anudaatta", "Udatta"],
+                oHi: ["स्वरित", "मंद्रता (Mandrata)", "अनुदात्त", "उदात्त"],
+                a: 1,
+                sE: "Vedic tonal accentuation relies on three accents: Udatta (acute/high), Anudatta (grave/low), and Svarita (circumflex). 'Mandrata' is not one of them.",
+                sH: "वैदिक मंत्रोच्चारण के तीन मुख्य स्वर होते हैं: उदात्त, अनुदात्त और स्वरित। 'मंद्रता' इनमें शामिल नहीं है।"
+            },
+            {
+                e: "Who is the celebrated author of the ancient Sanskrit grammatical work Ashtadhyayi?",
+                h: "प्राचीन संस्कृत व्याकरण ग्रंथ 'अष्टाध्यायी' के रचनाकार कौन हैं?",
+                oEn: ["Ashtavakra", "Panini", "Patanjali", "Charaka"],
+                oHi: ["अष्टावक्र", "पाणिनी (Panini)", "पतंजलि", "चरक"],
+                a: 1,
+                sE: "Panini is the author of Ashtadhyayi.",
+                sH: "अष्टाध्यायी के रचनाकार महर्षि पाणिनी हैं।"
+            },
+            {
+                e: "Which scientific subject is primarily dealt with in the 'Sushruta Samhita'?",
+                h: "'सुश्रुत संहिता' मुख्यतः किस विषय से संबंधित है?",
+                oEn: ["Religion and mythology", "Mathematics", "Medicine and Surgery", "Astrology"],
+                oHi: ["धर्म और पौराणिक कथाएं", "गणित", "चिकित्सा और शल्य चिकित्सा (Surgery)", "ज्योतिष"],
+                a: 2,
+                sE: "Sushruta Samhita, authored by Sushruta ('father of surgery'), is the foundational ancient Indian text on surgical techniques and medicine.",
+                sH: "'सुश्रुत संहिता' प्राचीन भारतीय शल्य चिकित्सा (सर्जरी) और आयुर्वेद का आधारभूत ग्रंथ है।"
+            },
+            {
+                e: "How many basic physical elements (Pancha-Mahabhuta) did early Indian philosophers identify to classify all matter?",
+                h: "प्राचीन भारतीय दार्शनिकों ने सभी भौतिक पदार्थों को वर्गीकृत करने के लिए कितने मूल तत्वों का वर्णन किया है?",
+                oEn: ["Five", "Six", "Three", "Nine"],
+                oHi: ["पांच (Five / पंचतत्व)", "छह", "तीन", "नौ"],
+                a: 0,
+                sE: "Matter was classified into Five Great Elements (Pancha-Bhoota): Earth (Prithvi), Water (Ap), Fire (Tejas), Air (Vayu), and Space/Ether (Akasha).",
+                sH: "पदार्थ को पांच मूल तत्वों (क्षिति, जल, पावक, गगन, समीरा) यानी पंचमहाभूत में वर्गीकृत किया गया है।"
+            },
+            {
+                e: "Which Vedanga (limb of the Vedas) is specifically dedicated to etymology and explanation of complex Vedic words?",
+                h: "वेदों का कौन-सा अंग (वेदांग) कठिन व जटिल वैदिक शब्दों की व्युत्पत्ति और व्याख्या के लिए जाना जाता है?",
+                oEn: ["Vyakaran", "Nirukta", "Chhanda", "Kalpa"],
+                oHi: ["व्याकरण", "निरुक्त (Nirukta)", "छंद", "कल्प"],
+                a: 1,
+                sE: "Nirukta, authored by Yaska, is the Vedanga dealing with etymology, word origin, and semantic interpretation of rare Vedic terms.",
+                sH: "महर्षि यास्क द्वारा रचित 'निरुक्त' कठिन वैदिक शब्दों के अर्थ और भाषा-व्युत्पत्ति (Etymology) से संबंधित वेदांग है।"
+            },
+            {
+                e: "The Vedic time period in Indian history roughly spans:",
+                h: "भारत में वैदिक काल की समग्र अवधि क्या मानी जाती है?",
+                oEn: ["336 to 323 BC", "3000 to 2600 BC", "550 to 323 BC", "1500 to 500 BC"],
+                oHi: ["336 से 323 ईसा पूर्व", "3000 से 2600 ईसा पूर्व", "550 से 323 ईसा पूर्व", "1500 से 500 ईसा पूर्व (1500 to 500 BC)"],
+                a: 3,
+                sE: "The Vedic age broadly dates from 1500 BCE to 500 BCE (divided into Early Vedic ~1500–1000 BCE and Later Vedic ~1000–500 BCE).",
+                sH: "वैदिक काल की समय-सीमा सामान्यतः 1500 ईसा पूर्व से 500 ईसा पूर्व तक मानी जाती है।"
+            },
+            {
+                e: "Dhanurveda, the Upaveda associated with Yajurveda, deals with:",
+                h: "यजुर्वेद का उपवेद 'धनुर्वेद' किससे संबंधित है?",
+                oEn: ["Art of warfare and archery", "Architecture", "Medicine", "Art and music"],
+                oHi: ["युद्ध कला और धनुर्विद्या (Art of warfare)", "वास्तुकला", "चिकित्सा", "कला और संगीत"],
+                a: 0,
+                sE: "Dhanurveda is the ancient Indian science of archery, military strategy, and martial arts.",
+                sH: "धनुर्वेद का संबंध सैन्य विज्ञान, युद्ध कला और अस्त्र-शस्त्र चलाने की विद्या से है।"
+            },
+            {
+                e: "There are four canonical Vedas: Rigveda, Samaveda, Yajurveda, and the fourth is _________.",
+                h: "चार वेदों में ऋग्वेद, सामवेद, यजुर्वेद और चौथा वेद कौन सा है?",
+                oEn: ["Dhanurveda", "Ayurveda", "Shilpaveda", "Atharvaveda"],
+                oHi: ["धनुर्वेद", "आयुर्वेद", "शिल्पवेद", "अथर्ववेद (Atharvaveda)"],
+                a: 3,
+                sE: "The four primary Vedas are Rigveda, Samaveda, Yajurveda, and Atharvaveda.",
+                sH: "चौथा वेद 'अथर्ववेद' है, जिसमें दैनिक जीवन के मंत्र, औषधियां और तंत्र-मंत्र संकलित हैं।"
+            }
+        ];
+
+        const state = {
+            current: 0,
+            answers: new Array(QUESTIONS.length).fill(null),
+            locked: new Array(QUESTIONS.length).fill(false),
+            mode: 'test',
+            lang: 'en',
+            startTime: null,
+            timerInterval: null,
+            elapsed: 0
+        };
+
+        function $(id) { return document.getElementById(id); }
+
+        function toast(msg) {
+            const t = $('toast');
+            $('toastText').textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        function formatTime(s) {
+            const m = Math.floor(s / 60);
+            return String(m).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+        }
+
+        function startApp(mode) {
+            state.mode = mode;
+            $('startScreen').classList.add('hidden');
+            $('quizApp').classList.remove('hidden');
+            state.startTime = Date.now();
+            state.timerInterval = setInterval(() => {
+                state.elapsed = Math.floor((Date.now() - state.startTime) / 1000);
+                $('timerText').textContent = formatTime(state.elapsed);
+            }, 1000);
+            renderQuestion();
+            buildPalette();
+        }
+
+        function toggleLang() {
+            state.lang = state.lang === 'en' ? 'hi' : 'en';
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const i = state.current;
+            const q = QUESTIONS[i];
+            const isQuiz = state.mode === 'quiz';
+            const locked = state.locked[i];
+            const userAns = state.answers[i];
+            const qTxt = state.lang === 'en' ? q.e : q.h;
+            const opts = state.lang === 'en' ? q.oEn : q.oHi;
+
+            let optsHtml = '';
+            opts.forEach((opt, idx) => {
+                let cls = '', tag = '';
+                if (isQuiz && locked) {
+                    if (idx === q.a) {
+                        cls = 'correct';
+                        tag = '<span class="opt-tag">Correct</span>';
+                    }
+                    if (userAns === idx && idx !== q.a) {
+                        cls = 'wrong';
+                        tag = '<span class="opt-tag">Your Ans</span>';
+                    }
+                } else if (userAns === idx) {
+                    cls = 'selected';
+                }
+                optsHtml += `
+                    <div class="opt ${cls} ${locked ? 'locked' : ''}" onclick="selectOption(${idx})">
+                        <div class="opt-letter">${String.fromCharCode(65 + idx)}</div>
+                        <div class="opt-text">${opt}</div>
+                        ${tag}
+                    </div>
+                `;
+            });
+
+            const solTxt = state.lang === 'en' ? q.sE : q.sH;
+            let solHtml = (isQuiz && locked) ? `
+                <div class="sol-box">
+                    <div class="sol-head"><i class="fas fa-lightbulb"></i> Explanation</div>
+                    <div>${solTxt}</div>
+                </div>
+            ` : '';
+
+            $('quizMain').innerHTML = `
+                <div class="q-card">
+                    <div class="q-top">
+                        <div class="q-num-badge">Question ${i + 1} of ${QUESTIONS.length}</div>
+                        <button class="lang-btn" onclick="toggleLang()">
+                            <i class="fas fa-language"></i> ${state.lang === 'en' ? 'हिन्दी' : 'English'}
+                        </button>
+                    </div>
+                    <div class="q-text">${qTxt}</div>
+                    <div class="opts">${optsHtml}</div>
+                    ${solHtml}
+                </div>
+            `;
+
+            $('prevBtn').disabled = i === 0;
+            $('nextLabel').textContent = i === QUESTIONS.length - 1 ? 'Finish' : 'Next';
+            updatePaletteGrid();
+        }
+
+        function selectOption(idx) {
+            if (state.mode === 'quiz' && state.locked[state.current]) return;
+            state.answers[state.current] = idx;
+            if (state.mode === 'quiz') {
+                state.locked[state.current] = true;
+                if (idx === QUESTIONS[state.current].a) {
+                    toast('Correct! 🎉');
+                } else {
+                    toast('Incorrect');
+                }
+            }
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if (state.current > 0) {
+                state.current--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (state.current < QUESTIONS.length - 1) {
+                state.current++;
+                renderQuestion();
+            } else {
+                openSubmitModal();
+            }
+        }
+
+        function buildPalette() {
+            const grid = $('paletteGrid');
+            grid.innerHTML = '';
+            QUESTIONS.forEach((_, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'pal-btn';
+                btn.id = 'pal-' + i;
+                btn.textContent = i + 1;
+                btn.onclick = () => {
+                    state.current = i;
+                    closePalette();
+                    renderQuestion();
+                };
+                grid.appendChild(btn);
+            });
+            updatePaletteGrid();
+        }
+
+        function updatePaletteGrid() {
+            QUESTIONS.forEach((_, i) => {
+                const btn = $('pal-' + i);
+                if (!btn) return;
+                btn.className = 'pal-btn';
+                if (i === state.current) btn.classList.add('current');
+                if (state.answers[i] !== null) btn.classList.add('answered');
+            });
+        }
+
+        function openPalette() {
+            $('paletteDrawer').classList.add('open');$('paletteOverlay').classList.add('open');
+        }
+
+        function closePalette() {
+            $('paletteDrawer').classList.remove('open');$('paletteOverlay').classList.remove('open');
+        }
+
+        function openSubmitModal() {
+            const ans = state.answers.filter(a => a !== null).length;
+            $('modalAttempted').textContent = ans;
+            $('modalUnattempted').textContent = QUESTIONS.length - ans;
+            $('submitModal').classList.add('open');
+        }
+
+        function closeSubmitModal() {
+            $('submitModal').classList.remove('open');
+        }
+
+        function confirmSubmit() {
+            closeSubmitModal();
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            let correct = 0, wrong = 0;
+            state.answers.forEach((ans, i) => {
+                if (ans !== null) {
+                    if (ans === QUESTIONS[i].a) correct++;
+                    else wrong++;
+                }
+            });
+            $('resultsInner').innerHTML = `
+                <h2>Test Completed!</h2>
+                <p style="color:var(--text-muted);margin:8px 0;">Total Time: ${formatTime(state.elapsed)}</p>
+                <div class="res-score-card">
+                    <div class="res-score-val">${correct} / ${QUESTIONS.length}</div>
+                    <div>Score</div>
+                </div>
+                <div class="res-grid">
+                    <div class="res-item"><div class="res-item-val" style="color:var(--green)">${correct}</div><div>Correct</div></div>
+                    <div class="res-item"><div class="res-item-val" style="color:var(--red)">${wrong}</div><div>Wrong</div></div>
+                </div>
+                <button class="modal-btn confirm" onclick="location.reload()">Re-attempt</button>
+            `;
+            $('resultsScreen').classList.add('open');
+        }
+    </script>
+</body>
+</html>
